@@ -16,12 +16,14 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
+import { EmployeeDashboardComponent } from './employee-component/create-employeedashboard/employee-dashboard/employee-dashboard.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateEmployeeComponent,
+    EmployeeDashboardComponent,
   ],
   imports: [
     BrowserModule,

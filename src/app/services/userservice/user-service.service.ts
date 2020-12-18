@@ -32,4 +32,8 @@ export class UserServiceService {
     return this.http.post('http://localhost:8080/employee-payroll/create/',data);
 
   }
+
+  getEmployee(id){
+    return this.http.get('http://localhost:8080/employee-payroll/getbyid/?id='+id);
+  }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit,ViewChildren,QueryList } from '@angular/core';
 import { UserServiceService } from '../../services/userservice/user-service.service';
 import { Employee } from "../../Employee";
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-employee',
@@ -27,7 +28,8 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   constructor(private employeeService: UserServiceService,
-     private formBuilder: FormBuilder) { }
+     private formBuilder: FormBuilder,private route: ActivatedRoute,
+     private router: Router) { }
   
   ngOnInit() {
     this.userDetail = this.formBuilder.group({
@@ -135,9 +137,9 @@ export class CreateEmployeeComponent implements OnInit {
     this.employeeService.createEmployee(employeeDto).subscribe((response: any) => {
       console.log("response is " +JSON.stringify(response));
     })
-    this.userDetail.reset();
-    // this.route.nav
-    alert("Submitted Succesfully ")
+    // this.userDetail.reset();
+    this.router.navigate(["/"]);
+    // alert("Submitted Succesfully ")
    }
 
   onReset() {
