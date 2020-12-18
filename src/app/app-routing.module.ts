@@ -7,7 +7,7 @@ import { EmployeeDashboardComponent } from './employee-component/create-employee
 const routes: Routes = [
    {path:"",component: EmployeeDashboardComponent},
    {path:"create-employee",component:CreateEmployeeComponent},
-   {path:"create",component:CreateEmployeeComponent}
+   {path:"create/:id",component:CreateEmployeeComponent}
 ];
 
 @NgModule({
