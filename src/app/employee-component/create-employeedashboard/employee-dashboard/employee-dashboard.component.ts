@@ -42,7 +42,4 @@ export class EmployeeDashboardComponent implements OnInit {
      return '#f6f6f6';
     }
  }
-
-
-
 }

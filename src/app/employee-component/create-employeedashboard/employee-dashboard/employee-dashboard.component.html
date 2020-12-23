@@ -13,13 +13,15 @@ margin-top: 1%;">
     <div style="font-weight: 800;
   font-size: 200%;">Employee Details</div>
     <div>
-        <button class="register" mat-raised-button color="primary" routerLink='/create'>Add Employee</button>
+
+        <button class="register" mat-raised-button color="primary" routerLink='/create-employee'>Add Employee</button>
     </div>
 </div>
 
 <div class="panel panel-default">
     <div class="tableWrapper">
         <div class="containerTitle">
+            <div class="oneTitle">Pic</div> 
             <div class="oneTitle">Id</div>
             <div class="oneTitle">Name</div>
             <div class="oneTitle">Salary</div>
@@ -30,6 +32,7 @@ margin-top: 1%;">
         </div>
 
         <div class="containerListItems" fxLayout="row" fxLayoutAlign="space-around center" *ngFor="let employee of employees;" [style.background-color]="changeColorOne()">
+            <div class="one"><img alt="" src="{{employee.profilePic}}"></div>
             <div class="one">{{employee.id}}</div>
             <div class="two">{{employee.name}}</div>
             <div class="two">{{employee.salary}}</div>
@@ -38,8 +41,8 @@ margin-top: 1%;">
             <div class="two">{{employee.startDate}}</div>
 
             <div class="three" fxLayout="row">
-                <button mat-raised-button [routerLink]="['/create', employee.id]">E</button>
-                <button mat-raised-button (click)="deleteEmployee(employee.id)">X</button>
+                <div [routerLink]="['/create', employee.id]"><img alt="edit" src="../assets/icons/create-black-18dp.svg"></div>
+                <div (click)="deleteEmployee(employee.id)"><img alt="delete"src="../assets/icons/delete-black-18dp.svg"></div>
             </div>
         </div>
     </div>

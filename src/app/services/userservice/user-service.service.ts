@@ -36,4 +36,10 @@ export class UserServiceService {
   getEmployee(id){
     return this.http.get('http://localhost:8080/employee-payroll/getbyid/?id='+id);
   }
+
+
+  updateEmployee(data){
+    return this.http.put('http://localhost:8080/employee-payroll/update/',data);
+
+  }
 }

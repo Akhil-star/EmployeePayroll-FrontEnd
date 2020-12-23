@@ -20,13 +20,15 @@
                 margin-top: 8.5%;"> Name </div>
                 <mat-form-field class="field" fxFlex='98' appearance="outline" style="margin-left:11%;">
                     <mat-label>Enter your name...</mat-label>
-                    <input matInput class="matInput"  formControlName="name" autocomplete="off" placeholder="Name">
+                    <input matInput class="matInput" formControlName="name" autocomplete="off" placeholder="Name">
+                    <mat-error fxFlex *ngIf="!userDetail.controls['name'].valid && userDetail.controls['name'].touched">
+                        Name is Required </mat-error>
                 </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start start" style="margin-top: 1%;">
                 <div style="font-size: 73%;
                 margin-right: 4%;
-                margin-top: 2%;" >Image</div>
+                margin-top: 2%;">Image</div>
                 <mat-radio-group aria-label="Image" formControlName="profilePic" fxLayout="row"
                     fxLayoutAlign="space-evenly" fxFlex='100' style="width: 100px; margin-left: 2%;">
                     <mat-radio-button value="../assets/profile-images/Ellipse -3.png">
@@ -57,9 +59,12 @@
                 <div style="font-size: 73%;
             margin-right: 4%;
             margin-top: 4.5%;">Department</div>
-            <div *ngFor = "let department of department" fxLayout="row" fxFlex='98' fxLayoutAlign="space-evenly" style="width: 100px;padding-top: 4.5%;">
-                <mat-checkbox style="font-size: 73%" formControlName="department" #checkBox [value]= "department" (change)="getCheckbox(checkBox)">{{department}}</mat-checkbox>
-                <!-- <section class="example-section" formControlName="department" fxLayout="row"
+                <div *ngFor="let department of Department" fxLayout="row" fxFlex='98' fxLayoutAlign="space-evenly"
+                    style="width: 100px;padding-top: 4.5%;">
+                    <mat-checkbox style="font-size: 73%" formControlName="department" #checkBox [value]="department"
+                        [checked]="toggleCheckBox(department)" (change)="getCheckbox(checkBox)">{{department}}
+                    </mat-checkbox>
+                    <!-- <section class="example-section" formControlName="department" fxLayout="row"
                     fxLayoutAlign="space-evenly " fxFlex='70' style="width: 100px;padding-top: 4%;font-size: 73%;">
                     <mat-checkbox value="dept1">HR</mat-checkbox>
                     <mat-checkbox value="dept2">Sales</mat-checkbox>
@@ -74,14 +79,18 @@
                 margin-right: 4%;
                 margin-top: 6%;">Salary</div>
                 <mat-slider fxFlex='60' formControlName="salary" style="margin-left:11%; margin-top:3.5%;width: 300px;"
-                    thumbLabel [displayWith]="formatLabel" (input)="getPrecio($event)" tickInterval="100" min="500" max="500000" value="{{precio}}"></mat-slider>
+                    thumbLabel [displayWith]="formatLabel" (input)="getPrecio($event)" tickInterval="100" min="500"
+                    max="500000" value="{{precio}}"></mat-slider>
+                <mat-error style="font-size: 25%"
+                    *ngIf="!userDetail.controls['salary'].valid && userDetail.controls['salary'].touched">
+                    Salary is Required </mat-error>
             </div>
             <div fxLayout="row" fxLayoutAlign="start start">
                 <div style="font-size: 73%;
                 margin-right: 4%;
                 margin-top: 7%;">Start Date</div>
-                <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 140px;padding-top: 1%; margin-left: 3%;"
-                    fxFlex='50'>
+                <div fxLayout="row" fxLayoutAlign="space-between center"
+                    style="width: 140px;padding-top: 1%; margin-left: 3%;" fxFlex='50'>
                     <mat-form-field class="field" fxFlex='50' appearance="outline">
                         <mat-label>Day</mat-label>
                         <select matNativeControl required formControlName="day">
@@ -89,6 +98,9 @@
                                 {{day}}
                             </option>
                         </select>
+                        <mat-error fxFlex
+                            *ngIf="!userDetail.controls['day'].valid && userDetail.controls['day'].touched">
+                            Day is Required </mat-error>
                     </mat-form-field>
                     <mat-form-field class="field" fxFlex='50' appearance="outline" style="margin-left: 5%;">
                         <mat-label> Month</mat-label>
@@ -97,7 +109,9 @@
                                 {{month}}
                             </option>
                         </select>
-
+                        <mat-error fxFlex
+                            *ngIf="!userDetail.controls['month'].valid && userDetail.controls['month'].touched">
+                            Month is Required </mat-error>
                     </mat-form-field>
                     <mat-form-field class="field" fxFlex='50' appearance="outline" style="margin-left: 5%;">
                         <mat-label> Year</mat-label>
@@ -106,16 +120,17 @@
                                 {{year}}
                             </option>
                         </select>
-
+                        <mat-error fxFlex
+                            *ngIf="!userDetail.controls['year'].valid && userDetail.controls['year'].touched">
+                            Year is Required </mat-error>
                     </mat-form-field>
                 </div>
-             </div>
-           <div fxLayout="row" fxLayoutAlign="start start">
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start">
                 <div style="font-size: 73%;
                 margin-right: 10%;
                 margin-top: 2.5%;"> Notes </div>
-                <mat-form-field class="field" fxFlex='98' appearance="outline"
-                    style="margin-left:4%;margin-top:1%;">
+                <mat-form-field class="field" fxFlex='98' appearance="outline" style="margin-left:4%;margin-top:1%;">
                     <mat-label>Notes</mat-label>
                     <input matInput class="matInput" formControlName="note" autocomplete="off" placeholder="Notes">
 
@@ -124,7 +139,10 @@
 
             <div class="button" fxLayout="row" fxLayoutAlign="space-between end">
                 <button class="register" mat-raised-button color="primary" routerLink='/'>Cancel</button>
-                <button class="register1" mat-raised-button color="primary" (click)="register()" [disabled]="!userDetail.valid">Submit</button>
+                <button class="register1" *ngIf="!isEdit" mat-raised-button color="primary" (click)="register()" 
+                    [disabled]="!userDetail.valid">Submit</button>
+                <button class="register1" *ngIf="isEdit" mat-raised-button color="primary" (click)="update()"
+                    >Update</button>
                 <button class="register" mat-raised-button color="primary" (click)="onReset()">Reset</button>
             </div>
 
